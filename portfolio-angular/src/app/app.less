@@ -1,0 +1,204 @@
+
+/* ─────────────────────────────
+   RESET
+───────────────────────────── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #F8E2D4;
+  color: #4D067B;
+}
+
+/* ─────────────────────────────
+   TOOLBAR
+───────────────────────────── */
+
+mat-toolbar {
+  background: linear-gradient(135deg, #ca75ff, rgb(146, 0, 214)) !important;
+  color: #4D067B !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 0 24px;
+}
+
+.espacador {
+  flex: 1 1 auto;
+}
+
+/* ─────────────────────────────
+   LINKS DO MENU
+───────────────────────────── */
+
+mat-toolbar a {
+  color: #4D067B !important;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 8px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+mat-toolbar a:hover {
+  background: rgba(114, 9, 183, 0.12);
+  transform: translateY(-2px);
+}
+
+.ativo {
+  background: #d284ffaf;
+  color: #4D067B !important;
+  box-shadow: 0 0 12px rgba(185, 132, 219, 0.5);
+}
+
+/* ─────────────────────────────
+   CONTEÚDO
+───────────────────────────── */
+
+main {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* ─────────────────────────────
+   CARDS
+───────────────────────────── */
+
+.mat-mdc-card,
+mat-card {
+  background: white !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08) !important;
+  transition: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.mat-mdc-card::before,
+mat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0, 0, 0, 0.04),
+    transparent
+  );
+  opacity: 0;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.mat-mdc-card:hover,
+mat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+}
+
+.mat-mdc-card:hover::before,
+mat-card:hover::before {
+  opacity: 1;
+}
+
+/* ─────────────────────────────
+   BOTÕES MATERIAL
+───────────────────────────── */
+
+button[mat-raised-button],
+button[mat-flat-button] {
+  background: #7209B7 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  transition: 0.3s;
+}
+
+button[mat-raised-button]:hover,
+button[mat-flat-button]:hover {
+  background: #4D067B !important;
+  transform: scale(1.04);
+}
+
+/* ─────────────────────────────
+   CAMPOS
+───────────────────────────── */
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+input,
+textarea {
+  color: #4D067B;
+}
+
+/* ─────────────────────────────
+   TÍTULOS
+───────────────────────────── */
+
+h1,
+h2,
+h3 {
+  color: #4D067B;
+}
+
+p {
+  color: #4D067B;
+  line-height: 1.7;
+}
+
+/* ─────────────────────────────
+   FOOTER
+───────────────────────────── */
+
+footer {
+  margin-top: 60px;
+  padding: 25px;
+  text-align: center;
+  background: #4D067B;
+  color: #B984DB;
+}
+
+/* ─────────────────────────────
+   SCROLLBAR
+───────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8E2D4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B984DB;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7209B7;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #5b0097;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(77, 6, 123, 0.3);
+  transition: 0.3s;
+  cursor: default;
+}
+
+.logo:hover {
+  transform: scale(1.03);
+  text-shadow: 0 4px 15px rgba(77, 6, 123, 0.5);
+}
