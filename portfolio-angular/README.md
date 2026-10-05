@@ -1,30 +1,14 @@
-# Meu Portfólio Angular
-Projeto desenvolvido utilizando Angular como parte das atividades da disciplina de Desenvolvimento Web II.
+## API em Node (Aula 21)
 
-## Sobre o projeto
-Este projeto tem como objetivo servir como meu portfólio pessoal, reunindo informações sobre mim, meus projetos e formas de contato.
+Uma segunda versao da API, em JavaScript, na pasta `api-node/`.
+O contrato de `GET /api/projetos` e o mesmo do `api/projetos.php`.
 
-Desenvolvido por: Rafael de Morais Farias
+Como rodar:
 
-## Tecnologias utilizadas
+    cd api-node
+    npm install
+    node server.js
 
-* Angular
-* TypeScript
-* HTML
-* CSS
+A API sobe em http://localhost:3000. Teste com:
 
-## Ambiente de desenvolvimento
-
-Node.js: XX.X.X
-npm: XX.X.X
-Angular CLI: 21.2.13
-
-## Executando o projeto
-
-```bash
-npm install
-ng serve
-```
-
-Após iniciar o servidor, acesse: http://localhost:4200/
-
+    curl -i http://localhost:3000/api/projetos
