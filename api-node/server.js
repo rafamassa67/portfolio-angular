@@ -1,21 +1,50 @@
 const express = require('express');
 const cors = require('cors');
-const pool = require('./db');
-
 const app = express();
 const PORTA = 3000;
 app.use(cors());
 
+// const cors = require('cors');
+// const pool = require('./db');
 
-app.get('/api/projetos/:id', async (req, res) => {
-  const sql = "SELECT id, nome, descricao, tecnologias, link_github, ano FROM projetos WHERE id = ? AND status = 'publicado'";
-  const [linhas] = await pool.excute(sql, [req.params.id]);
-  if (linhas.length === 0) {
-    return res.status(404).json({ erro: 'Projeto nao encontrado'});
-  }
-  res.json(linhs[0]);
+
+// app.use(cors());
+
+app.get('/', (req, res) => {
+  res.send('API do Portifolio em Node:  no ar');
+});
+
+app.get('/api/projetos', (req, res) => {
+  res.json(projetos);
 });
 
 app.listen(PORTA, () => {
-  console.log('API no ar em http://localhost')
-})
+  console.log('API no ar e, http://localhost:' + PORTA);
+});
+
+const projetos = [
+  {
+    id: 1,
+    nome: 'Portifolio Angular',
+    descricao: 'Meu Potifolio Angular com Angular Material.',
+    tecnologias: 'Angular, TypeScript',
+    link_github: 'https://github.com/rafamassa67/2026-DWII-portfolio-angular',
+    ano: 2026
+  },
+  {
+    id: 2,
+    nome: 'API de Portifolio em PHP',
+    descricao: 'Endpoints de projetos e catalogo com PDO e MariaDB.',
+    tecnologias: 'PHP, MariaDB',
+    link_github: null,
+    ano: 2026
+  },
+  {
+    id: 3,
+    nome: 'Siste,a de Cadastro v1',
+    descricao: 'CRUD em PHP do 1o trimestre.',
+    tecnologias: 'PHP, MariaDB, Boostrap',
+    link_github: null,
+    ano: 2026
+  },
+];
