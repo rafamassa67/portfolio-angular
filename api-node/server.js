@@ -1,50 +1,90 @@
 const express = require('express');
 const cors = require('cors');
+const pool = require('./db');
 const app = express();
 const PORTA = 3000;
 app.use(cors());
-
-// const cors = require('cors');
-// const pool = require('./db');
-
-
-// app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('API do Portifolio em Node:  no ar');
+  res.send('API do Portifolio em Node: no ar');
 });
 
-app.get('/api/projetos', (req, res) => {
-  res.json(projetos);
+app.get('/api/projetos', async (req, res) => {
+  try {
+    const sql = "SELECT id, nome, descricao, tecnologias, link_github, ano FROM projetos WHERE status = 'publicado' ORDER BY ano DESC, id";
+    const [linhas] = await pool.execute(sql);
+    res.json(linhas);
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha ao buscar projetos: ' + erro.message });
+  }
+});
+
+app.post('/api/projetos', async (req, res) => {
+  try {
+    const dados = req.body;
+    console.log(dados);
+
+    if (!dados || !dados.nome) {
+      return res.status(400).json({ erro: 'Informe pelo menos o nome do projeto' });
+    }
+
+    const sql = 'INSERT INTO projetos (nome, descricao, tecnologias, link_github, ano, status) VALUES (?, ?, ?, ?, ?, ?)';
+    
+    const [resultado] = await pool.execute(sql, [
+      dados.nome,
+      dados.descricao ?? '',
+      dados.tecnologias ?? '',
+      dados.link_github ?? '',
+      dados.ano ?? new Date().getFullYear(),
+      'publicado'
+    ]);
+
+    res.status(201).json({ id: resultado.insertId });
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  }
 });
 
 app.listen(PORTA, () => {
-  console.log('API no ar e, http://localhost:' + PORTA);
+  console.log('API no ar em http://localhost:' + PORTA);
 });
+app.put('/api/projetos/:id', async (req, res) => {
+  try {
+    const dados = req.body;
 
-const projetos = [
-  {
-    id: 1,
-    nome: 'Portifolio Angular',
-    descricao: 'Meu Potifolio Angular com Angular Material.',
-    tecnologias: 'Angular, TypeScript',
-    link_github: 'https://github.com/rafamassa67/2026-DWII-portfolio-angular',
-    ano: 2026
-  },
-  {
-    id: 2,
-    nome: 'API de Portifolio em PHP',
-    descricao: 'Endpoints de projetos e catalogo com PDO e MariaDB.',
-    tecnologias: 'PHP, MariaDB',
-    link_github: null,
-    ano: 2026
-  },
-  {
-    id: 3,
-    nome: 'Siste,a de Cadastro v1',
-    descricao: 'CRUD em PHP do 1o trimestre.',
-    tecnologias: 'PHP, MariaDB, Boostrap',
-    link_github: null,
-    ano: 2026
-  },
-];
+    if (!dados || !dados.nome) {
+      return res.status(400).json({ erro: 'Informe pelo menos o nome do projeto' });
+    }
+
+    const sql = 'UPDATE projetos SET nome = ?, descricao = ?, tecnologias = ?, link_github = ?, ano = ? WHERE id = ?';
+    
+    const [resultado] = await pool.execute(sql, [
+      dados.nome,
+      dados.descricao ?? '',
+      dados.tecnologias ?? '',
+      dados.link_github ?? '',
+      dados.ano ?? new Date().getFullYear(),
+      req.params.id
+    ]);
+
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({ erro: 'Projeto nao encontrado' });
+    }
+
+    res.json({ mensagem: 'Projeto atualizado' });
+  } catch (erro) {
+    res.status(500).json({ erro: 'Falha no servidor: ' + erro.message });
+  }
+});
+app.delete('/api/projetos/:id', async (req, res) => {
+  try{
+    const [resultado] = await pool.execute('DELETE FROM projetos WHERE id = ?', [req.params.id]);
+    if (resultado.affectedRows === 0) {
+      return res.status(404).json({erro: 'Projeto não encontrado'});
+    }
+    res.status(204).end();
+  } catch (erro) {
+    res.status(500).json({erro: 'Falha no servidor: ' + erro.message });
+  }
+});
