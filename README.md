@@ -1,14 +1,15 @@
-## API em Node (Aula 21)
+## API em Node (Aula 24)
 
-Uma segunda versao da API, em JavaScript, na pasta `api-node/`.
-O contrato de `GET /api/projetos` e o mesmo do `api/projetos.php`.
+Quem escreve precisa de um token. Antes do primeiro uso, crie a tabela e o dono:
 
-Como rodar:
+    sudo mariadb dwii_db < sql/usuarios.sql
+    cs api-node
+    nmp install
+    node criar-usuario.js dono@portifolio.dev portifolio2026
 
-    cd api-node
-    npm install
-    node server.js
 
-A API sobe em http://localhost:3000. Teste com:
+Login e escrita com o token:
 
-    curl -i http://localhost:3000/api/projetos
+    curl -i -X POST http://localhost:3000/api/login -H "Content-Type: application/json" -d '{"email":"dono@portfolio.dev","senha":"portfolio2026"}'
+    curl -i -X POST http://localhost:3000/api/projetos -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"nome":"Projeto com tranca","ano":2026}'
+    curl -i -X POST http://localhost:3000/api/projetos/8 -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"nome":"Projeto com tranca (editado)","ano":2026}'
